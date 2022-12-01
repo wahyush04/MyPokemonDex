@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment, R.id.myPokemonFragment
             )
         )
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         nav.setupWithNavController(navController)
     }

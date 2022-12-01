@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wahyush04.mypokemondex.data.remote.response.PokeResponse
 import com.wahyush04.mypokemondex.databinding.FragmentHomeBinding
-import com.wahyush04.mypokemondex.ui.main.MainActivity
 
 
 class HomeFragment : Fragment() {
@@ -28,7 +26,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root

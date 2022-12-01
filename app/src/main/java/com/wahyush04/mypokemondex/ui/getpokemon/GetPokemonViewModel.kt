@@ -12,7 +12,6 @@ class GetPokemonViewModel(application: Application): AndroidViewModel(applicatio
     private var myPokemonRepository: MyPokemonRepository = MyPokemonRepository(application)
     private var db: PokeDatabase = PokeDatabase.getDatabase(application)
 
-
     init {
         pokeDao = db.myPokemonDao()
     }

@@ -30,7 +30,6 @@ class HomeAdapter: RecyclerView.Adapter<HomeAdapter.ListViewHolder>(){
             }
             val url: String = user.url
             val id = url.split("https://pokeapi.co/api/v2/pokemon/","/", ignoreCase = true)
-//            val imgURL: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id[1] + ".png"
             val imgURL: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" + id[1] + ".png"
             binding.apply {
                 Glide.with(itemView)

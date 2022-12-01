@@ -12,9 +12,6 @@ interface PokeDao {
     @Delete()
     suspend fun delete(poke: PokeEntity)
 
-//    @Query("DELETE FROM tbl_poke WHERE id = :id")
-//    fun delete(id: Int)
-
     @Query("SELECT * FROM tbl_poke")
     fun getMyPokemon(): LiveData<List<PokeEntity>>
 
