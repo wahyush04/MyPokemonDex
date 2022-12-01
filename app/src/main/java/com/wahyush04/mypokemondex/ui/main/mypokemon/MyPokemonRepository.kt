@@ -9,12 +9,13 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class MyPokemonRepository(application: Application) {
+
     private var pokeDao: PokeDao?
-    private var pokeDB: PokeDatabase = PokeDatabase.getDatabase(application)
+    private var pokeDB: PokeDatabase? = PokeDatabase.getDatabase(application)
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
 
     init {
-        pokeDao = pokeDB.myPokemonDao()
+        pokeDao = pokeDB?.myPokemonDao()
     }
 
     fun getMyPokemon(): LiveData<List<PokeEntity>>?{
@@ -25,7 +26,7 @@ class MyPokemonRepository(application: Application) {
         executorService.execute { pokeDao?.insert(poke) }
     }
 
-    fun deletePokemon(poke: PokeEntity){
-        executorService.execute { pokeDao?.delete(poke) }
+    suspend fun deletePokemon(poke: PokeEntity){
+        pokeDao?.delete(poke)
     }
 }

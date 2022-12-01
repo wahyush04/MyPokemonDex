@@ -5,15 +5,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.wahyush04.mypokemondex.data.local.entity.MyTypeConverter
 import com.wahyush04.mypokemondex.data.local.entity.PokeEntity
 
 @Database(
     entities = [PokeEntity::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
-@TypeConverters(MyTypeConverter::class)
 abstract class PokeDatabase: RoomDatabase() {
     abstract fun myPokemonDao(): PokeDao
     companion object{
@@ -35,7 +33,7 @@ abstract class PokeDatabase: RoomDatabase() {
             }
             return INSTANCE as PokeDatabase
         }
-        fun getDatabaseOnFragment(appContext: Context): PokeDatabase{
+        private fun getDatabaseOnFragment(appContext: Context): PokeDatabase{
             if (INSTANCE==null){
                 synchronized(PokeDatabase::class){
                     INSTANCE = Room.databaseBuilder(appContext, PokeDatabase::class.java, "db_poke")

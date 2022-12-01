@@ -5,56 +5,86 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.wahyush04.mypokemondex.R
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.wahyush04.mypokemondex.data.local.entity.PokeEntity
+import com.wahyush04.mypokemondex.data.local.room.PokeDao
+import com.wahyush04.mypokemondex.data.local.room.PokeDatabase
+import com.wahyush04.mypokemondex.databinding.FragmentMyPokemonBinding.inflate
+import com.wahyush04.mypokemondex.databinding.FragmentMyPokemonBinding
+import com.wahyush04.mypokemondex.ui.detail.PokeDetailViewModel
+import com.wahyush04.mypokemondex.ui.getpokemon.GetPokemonViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MyPokemonFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MyPokemonFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentMyPokemonBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var pokeDao: PokeDao
+    private lateinit var adapter: MyPokemonAdapter
+    private lateinit var myPokemonViewModel: MyPokemonViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_pokemon, container, false)
+        inflate(inflater, container, false).also { _binding = it }
+
+        pokeDao = PokeDatabase.getInstance(requireContext()).myPokemonDao()
+
+
+        myPokemonViewModel = MyPokemonViewModel(requireActivity().application)
+
+        adapter = MyPokemonAdapter()
+        adapter.notifyDataSetChanged()
+
+
+
+        binding.apply {
+            rvPokeList.layoutManager = LinearLayoutManager(context)
+            rvPokeList.setHasFixedSize(true)
+            rvPokeList.adapter = adapter
+        }
+
+        myPokemonViewModel.getMyPokemon()?.observe(viewLifecycleOwner){
+            if (it != null){
+                val item = mapList(it)
+                adapter.setList(item)
+            }
+        }
+        adapter.setOnItemClickCallback(object : MyPokemonAdapter.OnItemClickCallback{
+            override fun onItemClicked(data: PokeEntity) {
+                val view = view
+                val toDetail = MyPokemonFragmentDirections.actionMyPokemonFragmentToMyPokemonDetail(data.url, data.nickname.toString(), data.id)
+                view?.findNavController()?.navigate(toDetail)
+            }
+        })
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyPokemonFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyPokemonFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun mapList(datas: List<PokeEntity>): ArrayList<PokeEntity> {
+        val listItem = ArrayList<PokeEntity>()
+        for (data in datas){
+            val itemMapped = PokeEntity(
+                id = data.id,
+                poke_id =  data.poke_id,
+                name = data.name,
+                nickname = data.nickname,
+                url = data.url,
+                img_url = data.img_url,
+                isCaught = data.isCaught
+
+            )
+            listItem.add(itemMapped)
+        }
+        return listItem
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

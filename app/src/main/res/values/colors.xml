@@ -6,11 +6,17 @@
     <color name="dark_prymary">#212121</color>
     <!--    <color name="dark_gray">#393E46</color>-->
     <color name="dark_gray">#606060</color>
-    <color name="primaryColor">#00bcd4</color>
-    <color name="primaryLightColor">#62efff</color>
-    <color name="primaryDarkColor">#008ba3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="primaryColor">#bf360c</color>
+    <color name="primaryLightColor">#ffff6b</color>
+    <color name="primaryDarkColor">#c6a700</color>
+    <color name="secondaryColor">#bf360c</color>
+    <color name="secondaryLightColor">#f9683a</color>
+    <color name="secondaryDarkColor">#870000</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffffff</color>
 </resources>

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.wahyush04.mypokemondex.ui.main.home.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_pokeDetailActivity"
@@ -17,11 +17,11 @@
     <fragment
         android:id="@+id/myPokemonFragment"
         android:name="com.wahyush04.mypokemondex.ui.main.mypokemon.MyPokemonFragment"
-        android:label="fragment_my_pokemon"
+        android:label="MyPokemon"
         tools:layout="@layout/fragment_my_pokemon" >
         <action
-            android:id="@+id/action_myPokemonFragment_to_pokeDetailActivity"
-            app:destination="@id/pokeDetailActivity" />
+            android:id="@+id/action_myPokemonFragment_to_myPokemonDetail"
+            app:destination="@id/myPokemonDetail" />
     </fragment>
     <activity
         android:id="@+id/pokeDetailActivity"
@@ -34,5 +34,24 @@
         <argument
             android:name="url"
             app:argType="string" />
+    </activity>
+    <activity
+        android:id="@+id/getPokemonActivity"
+        android:name="com.wahyush04.mypokemondex.ui.getpokemon.GetPokemonActivity"
+        android:label="activity_get_pokemon"
+        tools:layout="@layout/activity_get_pokemon" />
+    <activity
+        android:id="@+id/myPokemonDetail"
+        android:name="com.wahyush04.mypokemondex.ui.mypokemondetail.MyPokemonDetail"
+        android:label="activity_my_pokemon_detail"
+        tools:layout="@layout/activity_my_pokemon_detail" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument android:name="nickname"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </activity>
 </navigation>

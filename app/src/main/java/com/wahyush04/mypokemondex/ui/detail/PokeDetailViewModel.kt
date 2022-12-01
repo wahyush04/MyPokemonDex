@@ -18,7 +18,6 @@ import retrofit2.Response
 class PokeDetailViewModel(application: Application): AndroidViewModel(application) {
     val pokeDetail = MutableLiveData<PokeDetailResponse>()
     private var pokeDao: PokeDao
-    private var myPokemonRepository: MyPokemonRepository = MyPokemonRepository(application)
     private var db: PokeDatabase = PokeDatabase.getDatabase(application)
 
     init {
@@ -46,14 +45,6 @@ class PokeDetailViewModel(application: Application): AndroidViewModel(applicatio
 
     fun getPokeDetail(): LiveData<PokeDetailResponse>{
         return pokeDetail
-    }
-
-    fun insertPoke(poke: PokeEntity){
-        myPokemonRepository.addPokemon(poke)
-    }
-
-    fun deletePoke(poke: PokeEntity){
-        myPokemonRepository.deletePokemon(poke)
     }
 
 }

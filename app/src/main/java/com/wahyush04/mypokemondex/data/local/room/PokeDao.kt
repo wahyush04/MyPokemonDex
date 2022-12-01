@@ -6,15 +6,18 @@ import com.wahyush04.mypokemondex.data.local.entity.PokeEntity
 
 @Dao
 interface PokeDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(user: PokeEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(poke: PokeEntity)
 
-    @Delete
-    fun delete(user: PokeEntity)
+    @Delete()
+    suspend fun delete(poke: PokeEntity)
+
+//    @Query("DELETE FROM tbl_poke WHERE id = :id")
+//    fun delete(id: Int)
 
     @Query("SELECT * FROM tbl_poke")
     fun getMyPokemon(): LiveData<List<PokeEntity>>
 
-//    @Query("SELECT isCaught FROM tbl_poke WHERE tbl_poke.id = :id")
-//    suspend fun isCaught(id: Int) : Boolean
+    @Query("SELECT count(*) FROM tbl_poke WHERE tbl_poke.id = :id")
+    suspend fun isCaught(id: Int) : Int
 }

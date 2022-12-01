@@ -1,17 +1,23 @@
 package com.wahyush04.mypokemondex.ui.main.mypokemon
 
-import android.util.Log
+import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.wahyush04.mypokemondex.data.remote.network.ApiConfig
-import com.wahyush04.mypokemondex.data.remote.response.PokeListResponse
-import com.wahyush04.mypokemondex.data.remote.response.PokeResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.wahyush04.mypokemondex.data.local.entity.PokeEntity
+import com.wahyush04.mypokemondex.data.local.room.PokeDao
+import com.wahyush04.mypokemondex.data.local.room.PokeDatabase
 
-class MyPokemonViewModel : ViewModel() {
 
+class MyPokemonViewModel(application: Application) : ViewModel() {
+    private var pokeDao: PokeDao
+    private val myPokemonRepository : MyPokemonRepository = MyPokemonRepository(application)
+
+    init {
+        pokeDao = PokeDatabase.getInstance(application).myPokemonDao()
+    }
+
+    fun getMyPokemon(): LiveData<List<PokeEntity>>? {
+        return myPokemonRepository.getMyPokemon()
+    }
 
 }
