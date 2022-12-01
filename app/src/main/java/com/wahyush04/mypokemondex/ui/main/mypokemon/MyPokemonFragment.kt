@@ -34,13 +34,10 @@ class MyPokemonFragment : Fragment() {
 
         pokeDao = PokeDatabase.getInstance(requireContext()).myPokemonDao()
 
-
         myPokemonViewModel = MyPokemonViewModel(requireActivity().application)
 
         adapter = MyPokemonAdapter()
         adapter.notifyDataSetChanged()
-
-
 
         binding.apply {
             rvPokeList.layoutManager = LinearLayoutManager(context)

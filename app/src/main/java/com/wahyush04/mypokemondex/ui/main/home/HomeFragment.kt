@@ -34,7 +34,6 @@ class HomeFragment : Fragment() {
         adapter.notifyDataSetChanged()
 
         homeViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[HomeViewModel::class.java]
-
         adapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback{
             override fun onItemClicked(data: PokeResponse) {
                 val view = view
@@ -48,7 +47,7 @@ class HomeFragment : Fragment() {
             rvPokeList.layoutManager = LinearLayoutManager(context)
             rvPokeList.setHasFixedSize(true)
             rvPokeList.adapter = adapter
-
+            showLoading(true)
             homeViewModel.setPokeList()
 
         }

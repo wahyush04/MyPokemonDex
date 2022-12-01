@@ -3,6 +3,7 @@ package com.wahyush04.mypokemondex.ui.mypokemondetail
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -30,7 +31,7 @@ class MyPokemonDetail : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        showLoading(true)
         val url = args.url
         val id = args.id
         val pokeID = url.split("https://pokeapi.co/api/v2/pokemon/","/", ignoreCase = true)
@@ -78,7 +79,9 @@ class MyPokemonDetail : AppCompatActivity() {
                     .centerCrop()
                     .into(ivPokemon)
             }
+            showLoading(false)
         }
+
 
         binding.fabDelete.setOnClickListener{
             val builder = AlertDialog.Builder(this)
@@ -88,10 +91,17 @@ class MyPokemonDetail : AppCompatActivity() {
                 startActivity(Intent(this@MyPokemonDetail, MainActivity::class.java))
             }
             builder.setNegativeButton("No"){_,_ ->}
-            builder.setTitle("Delete $nickname $id ?")
+            builder.setTitle("Delete $nickname ?")
             builder.create().show()
 
         }
 
+    }
+    private fun showLoading(state: Boolean){
+        if (state){
+            binding.progressBar.visibility = View.VISIBLE
+        }else{
+            binding.progressBar.visibility = View.GONE
+        }
     }
 }

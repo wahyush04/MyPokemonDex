@@ -3,6 +3,7 @@ package com.wahyush04.mypokemondex.ui.detail
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -40,7 +41,7 @@ class PokeDetailActivity : AppCompatActivity() {
                 it.putExtra(Constant.ID, id[1])
             }
         }
-
+        showLoading(true)
         pokeDetailViewModel = ViewModelProvider(this)[PokeDetailViewModel::class.java]
         pokeDetailViewModel.setDetailPokemon(id[1])
         pokeDetailViewModel.getPokeDetail().observe(this){ data ->
@@ -83,6 +84,7 @@ class PokeDetailActivity : AppCompatActivity() {
                     .centerCrop()
                     .into(ivPokemon)
             }
+            showLoading(false)
         }
 
 
@@ -99,7 +101,13 @@ class PokeDetailActivity : AppCompatActivity() {
             }
         }
 
+    }
 
-
+    private fun showLoading(state: Boolean){
+        if (state){
+            binding.progressBar.visibility = View.VISIBLE
+        }else{
+            binding.progressBar.visibility = View.GONE
+        }
     }
 }
